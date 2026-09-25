@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>교차 검토 보고서 디자인 스타일</title>
+  <style>
+    :root{
+      color-scheme:dark;
+      --bg:#151815;
+      --paper:#1c201c;
+      --ink:#eceee9;
+      --muted:#a8b3aa;
+      --line:#33372f;
+      --strong:#6fbf94;
+      --panel:#222821;
+      --panel-2:#252d26;
+      --table-head:#293129;
+      --table-line:#3a4239;
+      --header-bg:#18362a;
+      --header-ink:#f2f7f3;
+      --header-muted:#b9c9c0;
+      --pass:#7fd3a3;
+      --pass-bg:#173226;
+      --pass-ink:#b8d9c2;
+      --pass-border:#2c5d42;
+      --warn:#e0b459;
+      --warn-bg:#332a15;
+      --warn-ink:#e4d2ac;
+      --warn-border:#6c5524;
+      --fail:#e29b91;
+      --fail-bg:#3a211e;
+      --fail-border:#6c3933;
+      --decision-border:#2c5d42;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px rgba(0,0,0,.35);
+    }
+    :root[data-theme="light"]{
+      color-scheme:light;
+      --bg:#f6f3ed;
+      --paper:#fffdf9;
+      --ink:#17201b;
+      --muted:#68746d;
+      --line:#e4ded3;
+      --strong:#264e3b;
+      --panel:#fff;
+      --panel-2:#f5f7f2;
+      --table-head:#edf2ee;
+      --table-line:#e4e9e5;
+      --header-bg:#18362a;
+      --header-ink:#f2f7f3;
+      --header-muted:#b9c9c0;
+      --pass:#16714a;
+      --pass-bg:#e8f4eb;
+      --pass-ink:#365845;
+      --pass-border:#b9dec6;
+      --warn:#946319;
+      --warn-bg:#fff3d8;
+      --warn-ink:#655238;
+      --warn-border:#e4c780;
+      --fail:#a7463a;
+      --fail-bg:#f8e8e5;
+      --fail-border:#e3b8b1;
+      --decision-border:#c4dfcc;
+      --shadow:0 2px 4px rgba(47,54,42,.04),0 16px 40px rgba(47,54,42,.08);
+    }
+    *{box-sizing:border-box}
+    html{color-scheme:dark}
+    body{margin:0;background:var(--bg);background-image:radial-gradient(circle at 8% 0%,rgba(82,130,102,.14),transparent 32%),radial-gradient(circle at 95% 10%,rgba(177,132,49,.10),transparent 30%);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",sans-serif;line-height:1.65}
+    :root[data-theme="light"] body{background-image:radial-gradient(circle at 8% 0%,rgba(231,242,236,.8),transparent 32%),radial-gradient(circle at 95% 10%,rgba(251,241,222,.7),transparent 30%)}
+    a{color:inherit}
+    .shell{width:min(1160px,calc(100% - 40px));margin:76px auto 88px}
+    .paper{background:var(--paper);border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}
+    .theme-toggle{position:fixed;right:18px;top:14px;z-index:20;display:inline-flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--paper) 92%,transparent);box-shadow:var(--shadow);backdrop-filter:blur(12px)}
+    .theme-toggle button{min-width:58px;min-height:36px;border:0;border-radius:999px;padding:7px 12px;background:transparent;color:var(--muted);cursor:pointer;font:700 12px/1 "Pretendard","Apple SD Gothic Neo","Noto Sans KR",sans-serif;transition:background .2s ease,color .2s ease,transform .2s ease}
+    .theme-toggle button:hover{color:var(--ink);transform:translateY(-1px)}
+    .theme-toggle button:focus-visible{outline:3px solid color-mix(in srgb,var(--strong) 45%,transparent);outline-offset:2px}
+    .theme-toggle button[aria-pressed="true"]{background:var(--strong);color:#fff}
+    @media(max-width:760px){.theme-toggle{top:10px;right:10px}}
+    @media print{.theme-toggle{display:none}}
+    .switcher{display:flex;justify-content:space-between;gap:16px;padding:16px 40px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
+    .switcher strong{color:var(--pass)}
+    .switcher a{font-weight:750;text-underline-offset:4px}
+    header{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.6fr);gap:34px;padding:48px 40px 36px;background:linear-gradient(135deg,#244d3a,var(--header-bg));color:var(--header-ink)}
+    header p{margin:0;color:var(--header-muted)}
+    .kicker{font-size:13px;font-weight:800;letter-spacing:.05em}
+    h1{max-width:760px;margin:12px 0 16px;font-size:clamp(30px,4.7vw,54px);line-height:1.13;letter-spacing:-.055em}
+    .verdict{align-self:end;border-top:1px solid rgba(255,255,255,.24);padding-top:22px}
+    .verdict b{display:block;color:var(--pass);font-size:32px;line-height:1}
+    .verdict span{display:block;margin-top:9px;color:var(--header-muted);font-size:14px}
+    main{padding:38px 40px 52px}
+    h2{margin:42px 0 14px;font-size:23px;letter-spacing:-.025em}
+    h2:first-child{margin-top:0}
+    .lead{max-width:76ch;margin:0;color:var(--muted)}
+    .roles{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center;margin:24px 0 8px}
+    .role{padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+    .role b{display:block;margin-bottom:5px;font-size:17px}
+    .role span{color:var(--muted);font-size:13px}
+    .arrow{color:var(--pass);font-weight:900;font-size:24px}
+    .rounds{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+    .round{padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+    .round + .round{border-left:1px solid var(--line)}
+    .round strong{display:block;font-size:27px;line-height:1.1}
+    .round > span{display:block;margin-top:7px;color:var(--muted);font-size:13px}
+    .round-flags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+    .round-flags b{display:inline-flex;align-items:center;min-height:24px;padding:3px 8px;border-radius:999px;font-size:11px;line-height:1.2}
+    .flag-fail{color:var(--fail);background:var(--fail-bg);border:1px solid var(--fail-border)}
+    .flag-aux{color:var(--warn);background:var(--warn-bg);border:1px solid var(--warn-border)}
+    .flag-warn{color:var(--warn);background:var(--warn-bg);border:1px solid var(--warn-border)}
+    .round-note{margin:12px 0 0;color:var(--muted);font-size:12px;line-height:1.55}
+    .round.pass{background:var(--pass-bg)}
+    .round.pass strong{color:var(--pass)}
+    .changes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+    .change{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+    .change code{font-size:12px;color:var(--fail);font-weight:800}
+    .change b{display:block;margin:7px 0 5px}
+    .change p{margin:0;color:var(--muted);font-size:13px}
+    .group{margin-top:18px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel)}
+    .group-head{display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding:16px 18px;background:var(--table-head);border-bottom:1px solid var(--line)}
+    .group-head b{font-size:17px}
+    .group-head span{color:var(--pass);font-size:13px;font-weight:800}
+    .checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));padding:8px 18px 14px}
+    .check{display:grid;grid-template-columns:42px 24px 1fr;gap:8px;padding:11px 0;border-bottom:1px solid var(--table-line);font-size:13px}
+    .check:nth-last-child(-n+2){border-bottom:0}
+    .tag{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted);font-weight:800}
+    .mark{color:var(--pass);font-weight:900}
+    .progress-board{margin-top:34px;padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--panel-2);overflow-x:auto}
+    .progress-board h3{margin:0 0 6px;font-size:18px;letter-spacing:-.02em}
+    .progress-board .board-note{margin:0 0 16px;color:var(--muted);font-size:13px}
+    .progress-table{width:100%;min-width:620px;border-collapse:separate;border-spacing:0;font-size:13px;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    .progress-table th,.progress-table td{padding:10px 12px;border-bottom:1px solid var(--table-line);text-align:left;vertical-align:middle}
+    .progress-table th{background:var(--table-head);color:var(--muted);font-size:12px;font-weight:800;white-space:nowrap}
+    .progress-table th:not(:first-child),.progress-table td:not(:first-child){text-align:center}
+    .progress-table tr:last-child td{border-bottom:0}
+    .progress-table .item-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:800;color:var(--muted);width:54px}
+    .progress-table .item-name{font-weight:650;color:var(--ink);min-width:220px}
+    .progress-table .section-row td{padding:8px 12px;background:var(--warn-bg);color:var(--warn);font-size:11px;font-weight:850;letter-spacing:.04em;border-bottom:1px solid var(--line)}
+    .state{display:inline-flex;align-items:center;justify-content:center;min-width:52px;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:850;letter-spacing:.02em}
+    .state.pass{color:var(--pass);background:var(--pass-bg);border:1px solid var(--pass-border)}
+    .state.fail{color:var(--fail);background:var(--fail-bg);border:1px solid var(--fail-border)}
+    .state.fixed{color:var(--pass);background:var(--pass-bg);border:1px solid var(--pass-border)}
+    .state.fixed::before{content:"✓ ";}
+    .state.warn{color:var(--warn);background:var(--warn-bg);border:1px solid var(--warn-border)}
+    .warnings{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .warning{padding:18px;background:var(--warn-bg);border:1px solid #e4c780;border-radius:16px}
+    .warning b{display:block;margin-bottom:6px;color:var(--warn)}
+    .warning p{margin:0;color:var(--warn-ink);font-size:13px}
+    .decision{margin-top:38px;padding:24px;background:var(--pass-bg);border:1px solid #c4dfcc;border-left:5px solid var(--pass);border-radius:16px}
+    .decision b{display:block;color:var(--pass);font-size:20px}
+    .decision p{margin:7px 0 0;color:var(--pass-ink)}
+    footer{padding:18px 40px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+    @media(max-width:760px){
+      .shell{width:min(100% - 20px,1120px);margin-top:68px}
+      .switcher{padding:14px 18px;flex-direction:column;gap:4px}
+      header{grid-template-columns:1fr;padding:34px 20px 26px}
+      main{padding:28px 20px 38px}
+      .roles{grid-template-columns:1fr}.arrow{transform:rotate(90deg);justify-self:center}
+      .rounds,.changes,.warnings{grid-template-columns:1fr}
+      .round + .round{border-left:0;border-top:1px solid var(--line)}
+      .checks{grid-template-columns:1fr}
+      .check:nth-last-child(2){border-bottom:1px solid var(--table-line)}
+      footer{padding:16px 20px}
+    }
+  .verdict b{color:#7fd3a3}.round{background:var(--panel);border-color:var(--line)}.reference-table-wrap{overflow-x:auto}.reference-table-wrap table{min-width:540px}.state{white-space:nowrap}
+</style>
+</head>
+<body>
+<!-- 디자인 스타일과 문서 간 이동을 위한 참고 파일. 실제 섹션·표·카드 수와 내용은 최종 Markdown에 맞춘다. -->
+<div class="theme-toggle" role="group" aria-label="테마 선택">
+  <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+  <button type="button" data-theme-choice="dark" aria-pressed="true">Dark</button>
+</div>
+<div class="shell">
+  <article class="paper">
+    <nav class="switcher" aria-label="문서 이동">
+      <strong aria-current="page">교차 검토 보고서</strong>
+      <a href="proposal-quote.html">제안서 보기</a>
+    </nav>
+    <header>
+      <div><p class="kicker">교차 검토 보고서 · 디자인 스타일</p><h1>[문서 제목]</h1><p>[검토 대상]</p></div>
+      <div class="verdict"><b>[통과 수 / 전체 수]</b><span>[최종 판정]</span></div>
+    </header>
+    <main>
+      <h2>[섹션 제목]</h2>
+      <p class="lead">[본문]</p>
+      <h2>[라운드 요약 제목]</h2>
+      <div class="rounds">
+        <div class="round"><strong>[통과 수 / 전체 수]</strong><span>[검토 차수 · 판정]</span><p class="round-note">[검토 요약]</p></div>
+      </div>
+      <div class="changes">
+        <div class="change"><code>[검사 ID]</code><b>[수정 항목]</b><p>[수정 내용]</p></div>
+      </div>
+      <section class="progress-board">
+        <h3>[검토 결과 표 제목]</h3>
+        <div class="reference-table-wrap">
+          <table class="progress-table">
+            <thead><tr><th scope="col">[검사 ID]</th><th scope="col">[검사 항목]</th><th scope="col">[판정]</th><th scope="col">[근거]</th></tr></thead>
+            <tbody><tr><td class="item-code">[ID]</td><td class="item-name">[내용]</td><td>[판정]</td><td>[근거]</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <h2>판정 표시</h2>
+      <p><span class="state pass">Y - 통과</span> <span class="state fail">N - 반려</span></p>
+      <div class="decision"><b>[종합 판정]</b><p>[판정 근거]</p></div>
+    </main>
+    <footer>[문서 하단 정보]</footer>
+  </article>
+</div>
+<script>
+    (() => {
+      const root = document.documentElement;
+      const buttons = [...document.querySelectorAll('[data-theme-choice]')];
+      const applyTheme = (theme) => {
+        const next = theme === 'light' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.themeChoice === next)));
+      };
+      applyTheme('dark');
+      buttons.forEach((button) => button.addEventListener('click', () => applyTheme(button.dataset.themeChoice)));
+    })();
+  </script>
+</body>
+</html>
