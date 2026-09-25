@@ -4,10 +4,6 @@
 !.env.example
 *.log
 configs/*.local.*
-outputs/
 playwright-report/
 test-results/
 .auth/
-artifacts/**/*
-!artifacts/**/
-!artifacts/**/.gitkeep
