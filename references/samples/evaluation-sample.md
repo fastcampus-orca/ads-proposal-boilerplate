@@ -90,4 +90,5 @@
 ## 참고자료
 
 - 이전 반려·수정 기록: [교차 검토 보고서의 라운드별 판정과 수정 결과](cross-review-report-sample.md#라운드별-판정)
-- 계산 기준: [업무 사규](../../docs/company-rules.md#작업검토-기준)
+- 계산 조건: [노트온 의뢰](requirements-sample.md#의뢰-v1)
+- 적용 요율·업무 조건: [업무 사규](../../docs/company-rules.md#작업검토-기준)
